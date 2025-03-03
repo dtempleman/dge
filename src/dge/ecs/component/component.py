@@ -1,6 +1,7 @@
 class Component:
-    def __init__(self, entity_id):
-        entity_id = entity_id
+    def __init__(self, parent: str, **kwargs):
+        self.parent = parent
+        pass
 
     def _update(self):
         pass

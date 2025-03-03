@@ -1,4 +1,4 @@
-from ..component import Component
+from dge.ecs.component import Component
 
 
 class Entity:
@@ -7,7 +7,10 @@ class Entity:
         self.components = []
 
     def add_component(self, component):
-        raise NotImplementedError()
+        self.components.append(component)
 
     def remove_component(self, component):
-        raise NotImplementedError()
+        self.components.remove(component)
+
+    def update(self):
+        pass
