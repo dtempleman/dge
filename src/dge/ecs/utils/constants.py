@@ -1,0 +1,2 @@
+MAX_ENTITIES: int = 5000
+MAX_COMPONENTS: int = 32
