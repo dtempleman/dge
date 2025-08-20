@@ -1,1 +1,4 @@
-from .engine.engine import Engine
+from .ecs import ECS
+
+
+ecs = ECS()

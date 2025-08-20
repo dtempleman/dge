@@ -1,9 +1,8 @@
-from src.dge.ecs import ECS, System, Signature, MAX_COMPONENTS
+from src.dge import ecs
+from src.dge.ecs import System, Signature, MAX_COMPONENTS
 from dataclasses import dataclass
 import random
 import time
-
-ecs = ECS()
 
 
 @dataclass

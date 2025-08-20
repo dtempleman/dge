@@ -1,4 +1,7 @@
+import sys
 from typing import Dict
+
+from numpy import isin
 from .entity import Entity, Signature
 
 
@@ -19,8 +22,10 @@ class SystemManager:
         self.signatures: Dict[str, Signature] = {}
         self.systems: Dict[str, type] = {}
 
-    def register_system(self, system: object):
-        sys_name = type(system).__name__
+    def register_system(self, system: type):
+        if not isinstance(system, type):
+            system = type(system)
+        sys_name = system.__name__
         if sys_name in self.systems:
             raise ValueError(f"System: {sys_name} is already registered.")
         self.systems[sys_name] = system

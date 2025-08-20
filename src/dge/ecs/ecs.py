@@ -14,7 +14,8 @@ class ECS:
 
     def _update_signature(self, entity: Entity, component: object, on: bool = True):
         signature = self.entity_manager.get_signature(entity)
-        signature[self.component_manager.get_component_type(component)] = on
+        component_type = self.component_manager.get_component_type(type(component))
+        signature[int(component_type)] = on
         self.entity_manager.set_signature(entity, signature)
         self.system_manager.entity_signature_changed(entity, signature)
 

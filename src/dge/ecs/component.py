@@ -66,7 +66,7 @@ class ComponentManager:
         self.type_to_array[comp_type] = ComponentArray()
         self.next_component_type += 1
 
-    def get_component_type(self, component: type):
+    def get_component_type(self, component: type) -> ComponentType:
         if not isinstance(component, type):
             component = type(component)
         comp_name = component.__name__
