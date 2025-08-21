@@ -33,4 +33,4 @@ clean:
 	@echo "Cleaned virtual environment"
 
 demo:
-	@$(POETRY) run python scripts/man_v_bear_demo.py
+	@$(POETRY) run python demos/man_v_bear_sim.py

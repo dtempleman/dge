@@ -8,21 +8,21 @@ import random
 @register_component()
 @dataclass
 class Health:
-    hp: int = 0
-    max_hp: int = 0
+    hp: int
+    max_hp: int
 
 
 @register_component()
 @dataclass
 class Weapon:
-    damage_max: int = 0
-    damage_min: int = 0
+    damage_max: int
+    damage_min: int
 
 
 @register_component()
 @dataclass
 class Name:
-    name: str = ""
+    name: str
 
 
 @register_system()
