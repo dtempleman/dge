@@ -1,6 +1,7 @@
 from .system import SystemManager, System
 from .entity import EntityManager, Entity, Signature
-from .component import ComponentManager
+from .component import ComponentManager, ComponentType
+from .utils.constants import MAX_COMPONENTS
 
 
 # https://austinmorlan.com/posts/entity_component_system/
@@ -34,18 +35,28 @@ class ECS:
         self.component_manager.add_component(entity, component)
         self._update_signature(entity, component)
 
-    def remove_component(self, entity: Entity, component: object):
+    def remove_component(self, entity: Entity, component: type):
         self.component_manager.remove_component(entity, component)
         self._update_signature(entity, component, on=False)
 
-    def get_component(self, entity: Entity, component: type):
+    def get_component(self, entity: Entity, component: type) -> object:
         return self.component_manager.get_component_array(component).get_data(entity)
 
-    def get_component_type(self, component: type):
+    def get_component_type(self, component: type) -> ComponentType:
         return self.component_manager.get_component_type(component)
 
-    def register_system(self, system: System):
-        self.system_manager.register_system(system)
+    def register_system(self, system: type):
+        system_obj = self.system_manager.register_system(system)
+        signature = self._create_system_signature(system_obj)
+        self.set_system_signature(system, signature)
+        return system_obj
 
-    def set_system_signature(self, system: System, signature: Signature):
+    def set_system_signature(self, system: type, signature: Signature):
         self.system_manager.set_signature(system, signature)
+
+    def _create_system_signature(self, system: System):
+        signature = Signature(MAX_COMPONENTS)
+        for component in system.signature_components:
+            comp_type = self.get_component_type(component)
+            signature[comp_type] = True
+        return signature

@@ -55,8 +55,6 @@ class ComponentManager:
         self.next_component_type: ComponentType = ComponentType(0)
 
     def register_component(self, component: type):
-        if not isinstance(component, type):
-            component = type(component)
         comp_name = component.__name__
         if comp_name in self.str_to_type:
             raise ValueError(f"Component: {comp_name} is already registered")
@@ -67,18 +65,16 @@ class ComponentManager:
         self.next_component_type += 1
 
     def get_component_type(self, component: type) -> ComponentType:
-        if not isinstance(component, type):
-            component = type(component)
         comp_name = component.__name__
         if comp_name not in self.str_to_type:
             raise ValueError(f"Component: {comp_name} is not registered")
         return self.str_to_type[comp_name]
 
     def add_component(self, entity: Entity, component: object):
-        array = self.get_component_array(component)
+        array = self.get_component_array(type(component))
         array.insert_data(entity, component)
 
-    def remove_component(self, entity: Entity, component: object):
+    def remove_component(self, entity: Entity, component: type):
         array = self.get_component_array(component)
         array.remove_data(entity)
 

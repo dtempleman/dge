@@ -1,7 +1,7 @@
-import sys
-from typing import Dict
+from typing import Dict, List
 
-from numpy import isin
+from dge.ecs.component import ComponentType
+
 from .entity import Entity, Signature
 
 
@@ -16,23 +16,29 @@ class System:
     def update(self, delta: float):
         pass
 
+    @property
+    def signature_components(self) -> List[type]:
+        return []
+
 
 class SystemManager:
     def __init__(self):
         self.signatures: Dict[str, Signature] = {}
-        self.systems: Dict[str, type] = {}
+        self.systems: Dict[str, System] = {}
 
     def register_system(self, system: type):
-        if not isinstance(system, type):
-            system = type(system)
+        if not issubclass(system, System):
+            raise ValueError(
+                f"Can only register system {system} as its not a subclasses of 'System'."
+            )
         sys_name = system.__name__
         if sys_name in self.systems:
             raise ValueError(f"System: {sys_name} is already registered.")
-        self.systems[sys_name] = system
+        s = system()
+        self.systems[sys_name] = s
+        return self.systems[sys_name]
 
     def set_signature(self, system: type, signature: Signature):
-        if not isinstance(system, type):
-            system = type(system)
         sys_name = system.__name__
         if sys_name not in self.systems:
             raise ValueError(f"System {sys_name} is not registered.")
