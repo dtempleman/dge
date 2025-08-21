@@ -1,15 +1,14 @@
 from typing import Dict, List
 
-from dge.ecs.component import ComponentType
-
 from .entity import Entity, Signature
 
 
 class System:
     def __init__(self):
-        # todo: im not sure if i like having to update the list of valid entities...
-        #       it would probably be better to have a query system that will return
-        #       all entities with the given Components, that might involve alot of
+        # todo: im not sure if i like having to update the list of
+        #       valid entities... it would probably be better to have
+        #       a query system that will return all entities with the
+        #       given Components, that might involve alot of
         #       refactoring though...
         self.entities: set[Entity] = set([])
 
